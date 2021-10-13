@@ -19,7 +19,7 @@ public class SingleDimensionalArrays
         Assert.IsTrue(array.All(element => element.Equals(0)));
 
         var array2 = new string[4];
-        Assert.IsTrue(array2.All(element => element.Equals(string.Empty)));
+        Assert.IsTrue(array2.All(element => string.IsNullOrEmpty(element)));
         
         // In the previous examples, the LINQ method All() is used to query the elements stored in the array.
         // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable
