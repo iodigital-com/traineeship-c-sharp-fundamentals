@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFundamentals.Collecti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFundamentals.Arrays", "CSharpFundamentals.Arrays\CSharpFundamentals.Arrays.csproj", "{55CCD2C6-25DB-49B5-9419-7EB0F6616B14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFundamentals.Linq", "CSharpFundamentals.Linq\CSharpFundamentals.Linq.csproj", "{09F87F78-08D4-44CC-AC03-E61DEA85C580}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{55CCD2C6-25DB-49B5-9419-7EB0F6616B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55CCD2C6-25DB-49B5-9419-7EB0F6616B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55CCD2C6-25DB-49B5-9419-7EB0F6616B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F87F78-08D4-44CC-AC03-E61DEA85C580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F87F78-08D4-44CC-AC03-E61DEA85C580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F87F78-08D4-44CC-AC03-E61DEA85C580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F87F78-08D4-44CC-AC03-E61DEA85C580}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
