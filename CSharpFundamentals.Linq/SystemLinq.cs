@@ -180,6 +180,17 @@ public class SystemLinqEnumerable
     
     #endregion
 
+    // TODO Concat, Zip, Join, Except, Union
+    [Test]
+    public void Concat()
+    {
+        // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.concat
+        // It is possible to combine collections that implement IEnumerable interface
+        // The following example concatenates an string array with a list of strings
+        var result = stringArray.Concat(new List<string>{"banana", "strawberry"}).ToList();
+        Assert.AreEqual(stringArray.Length + 2, result.Count);
+    }
+    
     #region NumericComputation
     
     [Test]
