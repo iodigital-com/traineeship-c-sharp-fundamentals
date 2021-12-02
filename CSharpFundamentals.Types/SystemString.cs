@@ -30,7 +30,9 @@ public class SystemString
         string string1 = string.Empty;
         string string2 = "";
         Assert.AreSame(string1, string2);
-        Assert.AreSame("", string.Empty);
+
+        const string actual = "";
+        Assert.AreSame(string.Empty, actual);
     }
 
     [Test]
@@ -50,14 +52,18 @@ public class SystemString
         // The Length property returns the number of Char objects in this instance, not the number of Unicode characters.
         // The reason is that a Unicode character might be represented by more than one Char. 
         string string1 = "Hello World!";
-        
-        Assert.AreEqual(12, string1.Length);
+
+        int actual = 12;
+        Assert.AreEqual(string1.Length, actual);
         
         // In .NET, a null character can be embedded in a string.
         // When a string includes one or more null characters, they are included in the length of the total string.
         string string2 = "Hello World!\u0000";
-        Assert.AreNotEqual(12, string2.Length);
-        Assert.AreEqual(13, string2.Length);
+        
+        Assert.AreNotEqual(string2.Length, actual);
+        
+        actual = 13;
+        Assert.AreEqual(string2.Length, actual);
     }
 
     #region StringInterpolation
@@ -73,23 +79,27 @@ public class SystemString
         string string1 = "Hello";
         string string2 = "World";
 
-        string string3 = $"{string1} {string2}!";
-        Assert.AreEqual("Hello World!", string3);
+        string expected = $"{string1} {string2}!";
+
+        string actual = "Hello World!";
+        Assert.AreEqual(expected, actual);
         
         // If the interpolation expression evaluates to null, an empty string ("", or String.Empty) is used.
         Assert.IsNull(defaultValue);
         Assert.DoesNotThrow(() =>
         { 
-            string3 = $"{string1} {defaultValue}!";
+            expected = $"{string1} {defaultValue}!";
         });
-        
-        Assert.AreEqual("Hello !", string3);
+
+        actual = "Hello !";
+        Assert.AreEqual(expected, actual);
         
         // If the interpolation expression doesn't evaluate to null, typically the ToString method of the result expression is called.
         var date = DateTime.UnixEpoch;
 
-        string3 = $"{date}";
-        Assert.AreEqual(date.ToString(), string3);
+        expected = $"{date}";
+        actual = date.ToString();
+        Assert.AreEqual(expected, actual);
     }
     
     // You specify a format string by following the interpolation expression with a colon (":") and the format string.
@@ -103,19 +113,28 @@ public class SystemString
         var date = DateTime.UnixEpoch;
 
         // "d": Short date pattern. https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#ShortDate
-        var string1 = $"{date:d}";
-        Assert.AreEqual("01/01/1970", string1);
-        Assert.AreEqual(date.ToString("d"), string1);
+        string expected = $"{date:d}";
+        string actual = "01/01/1970";
+        Assert.AreEqual(expected, actual);
+        
+        actual = date.ToString("d");
+        Assert.AreEqual(expected, actual);
         
         // "M", "m": Month/day pattern. https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#MonthDay
-        string1 = $"{date:m}";
-        Assert.AreEqual("January 01", string1);
-        Assert.AreEqual(date.ToString("m"), string1);
+        expected = $"{date:m}";
+        actual = "January 01";
+        Assert.AreEqual(expected, actual);
+
+        actual = date.ToString("m");
+        Assert.AreEqual(expected, actual);
         
         // "Y", "y": Year month pattern. https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#YearMonth
-        string1 = $"{date:y}";
-        Assert.AreEqual("1970 January", string1);
-        Assert.AreEqual(date.ToString("y"), string1);
+        expected = $"{date:y}";
+        actual = "1970 January";
+        Assert.AreEqual(expected, actual);
+
+        actual = date.ToString("y");
+        Assert.AreEqual(expected, actual);
     }
     
     // https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings
@@ -130,24 +149,36 @@ public class SystemString
     {
         // "C", "c" : The "C" (or currency) format specifier converts a number to a string that represents a currency amount.
         // https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#CFormatString
+        
         float number = 1234f;
         
         // The result string is affected by the formatting information of the current NumberFormatInfo object.
         CultureInfo.CurrentCulture = new CultureInfo("en-us");
-        var string1 = $"{number:c}";
-        Assert.AreEqual("$1,234.00", string1);
-        Assert.AreEqual(number.ToString("c"), string1);
+        string expected = $"{number:c}";
+        string actual = "$1,234.00";
+        Assert.AreEqual(expected, actual);
+
+        actual = number.ToString("c");
+        Assert.AreEqual(expected, actual);
         
         CultureInfo.CurrentCulture = new CultureInfo("nl-be");
-        string1 = $"{number:c}";
-        Assert.AreEqual("€ 1.234,00", string1);
-        Assert.AreEqual(number.ToString("c"), string1);
+        expected = $"{number:c}";
+
+        actual = "€ 1.234,00";
+        Assert.AreEqual(expected, actual);
+
+        actual = number.ToString("c");
+        Assert.AreEqual(expected, actual);
         
         CultureInfo.CurrentCulture = new CultureInfo("en-us");
         decimal value = 123.456m;
-        string1 = $"{value:C4}";
-        Assert.AreEqual("$123.4560", string1);
-        Assert.AreEqual(value.ToString("c4"), string1);
+        expected = $"{value:C4}";
+
+        actual = "$123.4560";
+        Assert.AreEqual(expected, actual);
+
+        actual = value.ToString("c4");
+        Assert.AreEqual(expected, actual);
     }
 
     [Test]
@@ -158,21 +189,28 @@ public class SystemString
         // The precision specifier indicates the minimum number of digits desired in the resulting string.
         // If no precision specifier is specified, the default is the minimum value required to represent the integer without leading zeros.
         int value = 0123456;
-        string string1 = $"{value:D}";
-        
-        Assert.AreEqual("123456", string1);
-        Assert.AreEqual($"{value}", $"{value:D}");
-        Assert.AreEqual(value.ToString("D"), $"{value:D}");
+        string expected = $"{value:D}";
+
+        string actual = "123456"; 
+        Assert.AreEqual(expected, actual);
+
+        actual = $"{value}";
+        Assert.AreEqual(expected, actual);
+
+        actual = value.ToString("D");
+        Assert.AreEqual(expected, actual);
 
         // If required, the number is padded with zeros to its left to produce the number of digits given by the precision specifier.
-        string1 = $"{value:D8}";
-        Assert.AreEqual("00123456",string1);
+        expected = $"{value:D8}";
+
+        actual = "00123456";
+        Assert.AreEqual(expected, actual);
         
         // This format is supported only for integral types.
         double number = 0123.456d;
         Assert.Throws<FormatException>(() =>
         {
-            string1 = $"{number:D}";
+            expected = $"{number:D}";
         });
     }
 
@@ -185,16 +223,23 @@ public class SystemString
         // The precision specifier indicates the desired number of digits after the decimal point.
         // If the precision specifier is omitted, a default of six digits after the decimal point is used.
 
-        double value = 12345.6789;
-        string string1 = $"{value:E}";
-        
-        Assert.AreEqual("1.234568E+004", string1);
-        Assert.AreEqual(value.ToString("E"), string1);
+        const double value = 12345.6789;
+        string expected = $"{value:E}";
+
+        string actual = "1.234568E+004";
+        Assert.AreEqual(expected, actual);
+
+        actual = value.ToString("E");
+        Assert.AreEqual(expected, actual);
         
         // The case of the format specifier indicates whether to prefix the exponent with an "E" or an "e".
-        string1 = $"{value:e}";
-        Assert.AreEqual("1.234568e+004", string1);
-        Assert.AreEqual(value.ToString("e"), string1);
+        expected = $"{value:e}";
+
+        actual = "1.234568e+004";
+        Assert.AreEqual(expected, actual);
+
+        actual = value.ToString("e");
+        Assert.AreEqual(expected, actual);
     }
 
     [Test]
@@ -206,13 +251,19 @@ public class SystemString
 
         float value = .2568f;
         var string1 = $"{value:P}";
-        
-        Assert.AreEqual("25.68 %", string1);
-        Assert.AreEqual(value.ToString("P"), string1);
+
+        string actual = "25.68 %";
+        Assert.AreEqual(string1, actual);
+
+        actual = value.ToString("P");
+        Assert.AreEqual(string1, actual);
 
         string1 = $"{value:P0}";
-        Assert.AreEqual("26 %", string1);
-        Assert.AreEqual(value.ToString("P0"), string1);
+        actual = "26 %";
+        Assert.AreEqual(string1, actual);
+
+        actual = value.ToString("P0");
+        Assert.AreEqual(string1, actual);
     }
     #endregion
     
@@ -236,19 +287,26 @@ public class SystemString
         
         // You can search for one or more occurrences of a substring by using the IndexOf method.
         // Notice we increment the index of the space character by 1 to point to the start of the actual substring we are interested in
-        var lastName = string1.Substring(string1.IndexOf(" ") + 1 ); 
-        Assert.AreEqual("Lastname", lastName);
+        var lastName = string1.Substring(string1.IndexOf(' ') + 1 );
+
+        string actual = "Lastname";
+        Assert.AreEqual(lastName, actual);
     }
     
     [Test]
     public void Split()
     {
-        // Use the Split method to create a string array containing the substrings in this instance that are delimited by elements of a specified string or Unicode character array.
+        // Use the Split method to create a string array containing the substrings in this instance that are delimited
+        // by elements of a specified string or Unicode character array.
         string string1 = "Firstname Lastname";
 
         string[] substrings = string1.Split(' ');
-        Assert.AreEqual("Firstname", substrings[0]);
-        Assert.AreEqual("Lastname", substrings[1]);
+
+        string actual = "Firstname";
+        Assert.AreEqual(substrings[0], actual);
+
+        actual = "Lastname";
+        Assert.AreEqual( substrings[1], actual);
     }
     
     [Test]
@@ -265,9 +323,12 @@ public class SystemString
         
         // Notice we increment the index of the space character by 1 to point to the start of the actual substring we are interested in
         var lastName = string1[(string1.IndexOf(' ') + 1)..];
-        
-        Assert.AreEqual("Firstname", firstName);
-        Assert.AreEqual("Lastname", lastName);
+
+        string actual = "Firstname";
+        Assert.AreEqual(firstName, actual);
+
+        actual = "Lastname";
+        Assert.AreEqual( lastName, actual);
     }
     #endregion
 
@@ -311,7 +372,6 @@ public class SystemString
         
         // The newline characters are still present in the trimmed string
         Assert.IsTrue(trimmed.Contains("\r\n"));
-        
     }
     
     #endregion

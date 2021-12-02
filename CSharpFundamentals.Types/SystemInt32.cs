@@ -18,7 +18,8 @@ public class SystemInt32
     public void DefaultValue()
     {
         // The default value of the Int32 type is 0
-        Assert.AreEqual(0, defaultValue);
+        int expected = 0;
+        Assert.AreEqual(expected, defaultValue);
     }
     
     // The following examples also shows the use of _ as a digit separator.
@@ -105,19 +106,25 @@ public class SystemInt32
         // You can call the Parse or TryParse method to convert
         // the string representation of an Int32 value to an Int32.
         // The string can contain either decimal or hexadecimal digits. 
-        Assert.AreEqual(101, int.Parse(string1));
-        Assert.AreEqual(1022524, int.Parse(hexadecimal, System.Globalization.NumberStyles.HexNumber));
+        int expected = 101;
+        Assert.AreEqual(expected, int.Parse(string1));
+
+        expected = 1022524;
+        Assert.AreEqual(expected, int.Parse(hexadecimal, System.Globalization.NumberStyles.HexNumber));
 
         var result = int.TryParse(string1, out int parsed);
         Assert.IsTrue(result); // The return value indicates whether the conversion succeeded.
-        Assert.AreEqual(101, parsed);
+
+        expected = 101;
+        Assert.AreEqual(expected, parsed);
         
         result = int.TryParse(hexadecimal, 
             System.Globalization.NumberStyles.HexNumber,
             null, 
             out int parsedHex);
         Assert.IsTrue(result); // The return value indicates whether the conversion succeeded.
-        Assert.AreEqual(1022524, parsedHex);
+        expected = 1022524;
+        Assert.AreEqual(expected, parsedHex);
     }
 
     [Test]
@@ -128,7 +135,8 @@ public class SystemInt32
         
         // You can call a method of the Convert class to a string type to an Int32 value.
         // https://docs.microsoft.com/en-us/dotnet/api/system.convert?view=net-6.0
-        Assert.AreEqual(101, Convert.ToInt32(string1));
+        int expected = 101;
+        Assert.AreEqual(expected, Convert.ToInt32(string1));
         
         // However, this does not work for strings containing hexadecimal digits.
         Assert.Throws<FormatException>(() =>

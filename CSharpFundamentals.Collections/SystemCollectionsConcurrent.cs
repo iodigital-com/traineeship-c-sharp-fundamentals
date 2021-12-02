@@ -34,22 +34,28 @@ public class SystemCollectionsConcurrent
             var addValue = 1;
             dictionary.AddOrUpdate(1, addValue, (key, oldValue) => oldValue + addValue);
         });
-        Assert.AreEqual(10000, dictionary[1]);
+
+        var expected = 10000;
+        Assert.AreEqual(expected, dictionary[1]);
         
         // GetOrAdd adds a key/value pair to the ConcurrentDictionary<TKey,TValue> if the key does not already exist.
         // Returns the new value, or the existing value if the key already exists.
         int value = dictionary.GetOrAdd(2, (key) => 100);
-        
-        Assert.AreEqual(100, value);
+
+        expected = 100;
+        Assert.AreEqual(expected, value);
 
         // Should return 100, as key 2 is already set to that value
         value = dictionary.GetOrAdd(2, (key) => 2000);
-        Assert.AreEqual(100, value);
+        expected = 100;
+        Assert.AreEqual(expected, value);
         
         // TryGetValue attempts to get the value associated with the specified key from the ConcurrentDictionary<TKey,TValue>.
         bool result = dictionary.TryGetValue(3, out var element);
         Assert.IsFalse(result);
-        Assert.AreEqual(0, element);
+
+        expected = 0;
+        Assert.AreEqual(expected, element);
     }
 
     [Test]
@@ -65,13 +71,17 @@ public class SystemCollectionsConcurrent
         // https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentqueue-1
         
         ConcurrentQueue<double[]> doublesQueue = new();
-        Assert.AreEqual(0, doublesQueue.Count);
+
+        var expected = 0;
+        Assert.AreEqual(expected, doublesQueue.Count);
         
         // Three main operations can be performed on a Queue<T> and its elements: Enqueue, Dequeue & Peek
         
         // Enqueue adds an element to the end of the Queue<T>
         doublesQueue.Enqueue(new []{ 1.0, 0.2, 1.5E4 });
-        Assert.AreEqual(1, doublesQueue.Count);
+
+        expected = 1;
+        Assert.AreEqual(expected, doublesQueue.Count);
         
         // TryDequeue tries to remove and return the object at the beginning of the ConcurrentQueue<T>.
         // It returns true if an element was removed and returned from the beginning of the ConcurrentQueue<T> successfully; otherwise, false.
@@ -100,14 +110,17 @@ public class SystemCollectionsConcurrent
         // Returns true if and object was returned successfully; otherwise, false.
         bool result = stack.TryPeek(out int value);
         Assert.IsFalse(result);
-        Assert.AreEqual(0, value);
+
+        var expected = 0;
+        Assert.AreEqual(expected, value);
         
         // Push inserts an object at the top of the ConcurrentStack<T>.
         Parallel.For(0, 10000, i =>
         {
             stack.Push(i);
         });
-        
-        Assert.AreEqual(10000, stack.Count);
+
+        expected = 10000;
+        Assert.AreEqual(expected, stack.Count);
     }
 }

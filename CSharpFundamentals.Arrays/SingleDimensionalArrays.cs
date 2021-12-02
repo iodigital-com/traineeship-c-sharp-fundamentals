@@ -16,7 +16,8 @@ public class SingleDimensionalArrays
         var array = new int[5];
         
         // The elements of the array are initialized to the default value of the element type (in this case 0 for integers).
-        Assert.IsTrue(array.All(element => element.Equals(0)));
+        var expectedDefaultValue = 0;
+        Assert.IsTrue(array.All(element => element.Equals(expectedDefaultValue)));
 
         var array2 = new string[4];
         Assert.IsTrue(array2.All(element => string.IsNullOrEmpty(element)));
@@ -32,7 +33,8 @@ public class SingleDimensionalArrays
         // The array length is inferred by the number of elements in the initialization list.
 
         var array = new string[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-        Assert.AreEqual(7, array.Length);
+        var expected = 7;
+        Assert.AreEqual(expected, array.Length);
         
         // You can avoid the new expression and the array type when you initialize an array upon declaration
         // This is called an implicitly typed array
@@ -47,9 +49,12 @@ public class SingleDimensionalArrays
     {
         // You can retrieve the data of an array by using an index.
         string[] days = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+
+        var expectedElementAtIndexZero = "Mon";
+        Assert.AreEqual(expectedElementAtIndexZero, days[0]);
         
-        Assert.AreEqual("Mon", days[0]);
-        Assert.AreEqual("Mon", days[0]);
+        var expectedElementAtIndexFour = "Fri";
+        Assert.AreEqual(expectedElementAtIndexFour, days[4]);
         // Ranges and indices provide a succinct syntax for accessing single elements or ranges in a sequence.
         // https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/ranges-indexes
         
@@ -57,22 +62,37 @@ public class SingleDimensionalArrays
         // Ranges are exclusive, meaning the end isn't included in the range.
         var weekDays = days[..5];
         Assert.AreEqual(5, weekDays.Length);
-        Assert.AreEqual("Mon", weekDays[0]);
-        Assert.AreEqual("Fri", weekDays[4]);
+
+        expectedElementAtIndexZero = "Mon";
+        Assert.AreEqual(expectedElementAtIndexZero, weekDays[0]);
+        
+        expectedElementAtIndexFour = "Fri";
+        Assert.AreEqual(expectedElementAtIndexFour, weekDays[4]);
 
         var weekendDays = days[5..];
         Assert.AreEqual(2, weekendDays.Length);
-        Assert.AreEqual("Sat", weekendDays[0]);
-        Assert.AreEqual("Sun", weekendDays[1]);
+
+        expectedElementAtIndexZero = "Sat";
+        Assert.AreEqual(expectedElementAtIndexZero, weekendDays[0]);
+        
+        var expectedElementAtIndexOne = "Sun";
+        Assert.AreEqual(expectedElementAtIndexOne, weekendDays[1]);
 
         var tuesdayThroughFriday = days[1..5];
         Assert.AreEqual(4, tuesdayThroughFriday.Length);
-        Assert.AreEqual("Tue", tuesdayThroughFriday[0]);
-        Assert.AreEqual("Fri", tuesdayThroughFriday[3]);
+        
+        expectedElementAtIndexZero = "Tue";
+        Assert.AreEqual(expectedElementAtIndexZero, tuesdayThroughFriday[0]);
+        
+        var expectedElementAtIndexThree = "Fri";
+        Assert.AreEqual(expectedElementAtIndexThree, tuesdayThroughFriday[3]);
         
         // The `index from end` operator ^ specifies that an index is relative to the end of a sequence.
-        Assert.AreEqual(weekendDays, days[^2..]);
-        Assert.AreEqual(weekDays, days[^7..^2]);
+        var actual = weekendDays;
+        Assert.AreEqual(days[^2..], actual);
+
+        actual = weekDays;
+        Assert.AreEqual(days[^7..^2], actual);
     }
 
     [Test]
@@ -82,9 +102,11 @@ public class SingleDimensionalArrays
         // https://docs.microsoft.com/en-us/dotnet/api/system.array#remarks
         
         var days = new []{ "Mon", "Tue", "Wed", "Thu", "Fri" };
+        
+        var outOfRangeIndex = 5;
         Assert.Throws<IndexOutOfRangeException>(() =>
         {
-            days[5] = "Sat";
+            days[outOfRangeIndex] = "Sat";
         });
         
         // To increase the capacity, you must create a new Array object with the required capacity,
@@ -105,9 +127,10 @@ public class SingleDimensionalArrays
         // Attempting to retrieve a non-existing index from an array results in an IndexOutOfRangeException
         string[] days = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 
+        var outOfRangeIndex = 8;
         Assert.Throws<IndexOutOfRangeException>(() =>
         {
-            var day = days[8];
+            var day = days[outOfRangeIndex];
         });
     }
 }

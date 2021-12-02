@@ -11,6 +11,9 @@ namespace CSharpFundamentals.Collections;
 /// https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic
 /// https://docs.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class
 /// https://docs.microsoft.com/en-us/dotnet/standard/collections/commonly-used-collection-types
+///
+/// The following examples also demonstrate the use of LINQ (method syntax) on collection types (eg. First(), Last(), ...).
+/// https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable
 /// </summary>
 public class SystemCollectionsGeneric
 {
@@ -28,7 +31,8 @@ public class SystemCollectionsGeneric
         intList.Add(5);
 
         // Assert intList contains 1 object
-        Assert.AreEqual(1, intList.Count);
+        var expected = 1;
+        Assert.AreEqual(expected, intList.Count);
 
         // Assert intList contains an object representing the integer value 5 
         Assert.IsTrue(intList.Contains(5));
@@ -37,16 +41,19 @@ public class SystemCollectionsGeneric
         intList.AddRange(new[] { 1, 6, 3, 2 });
 
         // Assert intList contains 5 object
-        Assert.AreEqual(5, intList.Count);
+        expected = 5;
+        Assert.AreEqual(expected, intList.Count);
 
-        // Assert the last object in intList contains an object representing the integer value 2 
-        Assert.AreEqual(2, intList[4]);
+        // Assert the last object in intList contains an object representing the integer value 2
+        expected = 2;
+        Assert.AreEqual(expected, intList[4]);
 
         // Sort the intList collection
         intList.Sort();
 
         // Assert the last object in intList contains an object representing the integer value 6 
-        Assert.AreEqual(6, intList[4]);
+        expected = 6;
+        Assert.AreEqual(expected, intList.Last());
 
         // Initialize a new collection for string object
         var stringList = new List<string>
@@ -54,16 +61,17 @@ public class SystemCollectionsGeneric
             "juice",
             "adrenaline",
             "inert",
+            "zoo",
             "chocolate",
             "boost",
-            "zoo"
         };
 
         // Sort the stringList collection
-        stringList.Sort();
+        stringList = stringList.OrderBy(x => x).ToList();
 
-        // Assert the last object in intList contains an object representing the integer value 6 
-        Assert.AreEqual("zoo", stringList[5]);
+        // Assert the last object in stringList contains an object representing the string value "zoo"
+        var expectedString = "zoo";
+        Assert.AreEqual(expectedString, stringList.Last());
 
         // Remove the string object "adrenaline"
         stringList.Remove("adrenaline");
@@ -100,7 +108,8 @@ public class SystemCollectionsGeneric
         {
             var result = dictionary.TryAdd("tea", new[] { "hot water", "black tea leaves" });
             // If the key already exists, TryAdd does nothing and returns false.
-            Assert.IsFalse(result);
+            var expected = false;
+            Assert.AreEqual(expected, result);
         });
         
         // The indexer throws an exception if the requested key is not in the dictionary.
@@ -127,7 +136,8 @@ public class SystemCollectionsGeneric
 
         // But a value can be, if its type TValue is a reference type
         Assert.DoesNotThrow(() => { dictionary.Add("black tea", null); });
-        Assert.IsTrue(dictionary.ContainsValue(null));
+        var expected = true;
+        Assert.AreEqual(expected, dictionary.ContainsValue(null));
 
         // For purposes of enumeration, each item in the dictionary is treated as a KeyValuePair<TKey,TValue> structure representing a value and its key.
         // The order in which the items are returned is undefined.
@@ -139,7 +149,8 @@ public class SystemCollectionsGeneric
             }
         }
 
-        Assert.IsFalse(dictionary.ContainsValue(null));
+        expected = false;
+        Assert.AreEqual(expected, dictionary.ContainsValue(null));
     }
 
     [Test]
@@ -157,13 +168,15 @@ public class SystemCollectionsGeneric
         };
 
         // Assert first element key equals "tea"
-        Assert.AreEqual("tea", sortedList.Keys[0]);
-
+        var expected = "tea";
+        Assert.AreEqual(expected, sortedList.First().Key);
+        
         sortedList.Add("coffee", new[] { "hot water", "roasted beans" });
         sortedList.Add("chocolate milk", new[] { "hot milk", "cocoa powder", "sugar" });
 
         // Assert first element key equals "chocolate milk"
-        Assert.AreEqual("chocolate milk", sortedList.Keys[0]);
+        expected = "chocolate milk";
+        Assert.AreEqual(expected, sortedList.First().Key);
     }
 
     [Test]
@@ -183,10 +196,11 @@ public class SystemCollectionsGeneric
         dictionary.Add("chocolate milk", new() { "hot milk", "cocoa powder", "sugar" });
         dictionary.Add("black tea", new() { "hot water", "black tea leaves" });
         
-        // The following examples demonstrates the use of LINQ (method syntax) on a collection type.
-        // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable
-        Assert.AreEqual("black tea", dictionary.First().Key);
-        Assert.AreEqual("green tea", dictionary.Last().Key);
+        var expected = "black tea";
+        Assert.AreEqual(expected, dictionary.First().Key);
+
+        expected = "green tea";
+        Assert.AreEqual(expected, dictionary.Last().Key);
     }
 
     // Stacks and queues are useful when you need temporary storage for information; that is, when you might want to discard an element after retrieving its value.
@@ -212,7 +226,9 @@ public class SystemCollectionsGeneric
         
         // Dequeue removes the oldest element from the start of the Queue<T>
         var lastElement = doublesQueue.Dequeue();
-        Assert.AreEqual(0, doublesQueue.Count);
+        
+        var expected = 0;
+        Assert.AreEqual(expected, doublesQueue.Count);
         
         // Calling Dequeue on an empty Queue<T> will throw an InvalidOperationException
         Assert.Throws<InvalidOperationException>(() =>
@@ -225,7 +241,8 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
             bool result = doublesQueue.TryDequeue(out double[] element);
-            Assert.IsFalse(result);
+            var expected = false;
+            Assert.AreEqual(expected, result);
         });
         
         // Peek returns the oldest element that is at the start of the Queue<T> but does not remove it from the Queue<T>
@@ -241,7 +258,8 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
              bool result = doublesQueue.TryPeek(out double[] element);
-             Assert.IsFalse(result);
+             var expected = false;
+             Assert.AreEqual(expected, result);
              Assert.IsNull(element);
         });
     }
@@ -254,7 +272,8 @@ public class SystemCollectionsGeneric
         // https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.stack-1?
 
         Stack<SortedList<string, string[]>> listStack = new();
-        Assert.AreEqual(0, listStack.Count);
+        var expected = 0;
+        Assert.AreEqual(expected, listStack.Count);
         
         // Three main operations can be performed on a Stack<T> and its elements: Push, Pop & Peek
         
@@ -265,12 +284,14 @@ public class SystemCollectionsGeneric
             {"black tea", new []{"hot water", "black tea leaves"}},
             {"camomile tea", new []{"hot water", "camomile flowers", "honey"}}
         });
-        
-        Assert.AreEqual(1, listStack.Count);
+
+        expected = 1;
+        Assert.AreEqual(expected, listStack.Count);
         
         // Pop removes and returns the object at the top of the Stack<T>.
         var element = listStack.Pop();
-        Assert.AreEqual(0, listStack.Count);
+        expected = 0;
+        Assert.AreEqual(expected, listStack.Count);
         
         // Calling Pop on an empty Stack<T> will throw an InvalidOperationException
         Assert.Throws<InvalidOperationException>(() =>
@@ -283,7 +304,8 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
             bool result = listStack.TryPop(out SortedList<string, string[]> element);
-            Assert.IsFalse(result);
+            var expected = false;
+            Assert.AreEqual(expected, result);
             Assert.IsNull(element);
         });
         
@@ -298,7 +320,8 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
             bool result = listStack.TryPeek(out SortedList<string, string[]> element);
-            Assert.IsFalse(result);
+            var expected = false;
+            Assert.AreEqual(expected, result);
             Assert.IsNull(element);
         });
     }

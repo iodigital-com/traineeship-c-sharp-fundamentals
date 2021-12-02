@@ -8,7 +8,7 @@ public class FlaggedEnums
 {
     // To indicate that an enumeration type declares bit fields, apply the Flags attribute to it.
     [Flags]
-    public enum Days
+    private enum Days
     {
         Undefined = 0,
         Monday    = 1,
@@ -25,7 +25,7 @@ public class FlaggedEnums
     public void Operations()
     {
         // You can use the bitwise logical operator | to combine choices.
-        var businessDays = Days.Monday | Days.Tuesday | Days.Wednesday | Days.Thursday | Days.Friday;
+        const Days businessDays = Days.Monday | Days.Tuesday | Days.Wednesday | Days.Thursday | Days.Friday;
         
         // You can use the bitwise logical operator & to intersect combinations of choices.
         
@@ -36,11 +36,18 @@ public class FlaggedEnums
         Assert.IsTrue((Days.Weekend & Days.Sunday) == Days.Sunday);
         
         // Addition & subtraction operator
-        var sumOfWeekendDays = Days.Saturday + (int)Days.Sunday;
-        Assert.AreEqual(Days.Weekend, sumOfWeekendDays);
+        const Days sumOfWeekendDays = Days.Saturday + (int)Days.Sunday;
+        var expected = Days.Weekend;
+        Assert.AreEqual(expected, sumOfWeekendDays);
         
         // Postfix & prefix increment and decrement operators
         var saturday = Days.Saturday;
-        Assert.AreNotEqual(Days.Weekend, ++saturday);
+        var actual = ++saturday;
+
+        expected = Days.Sunday;
+        Assert.AreNotEqual(expected, actual);
+
+        expected = Days.Monday | Days.Saturday;
+        Assert.AreEqual(expected, actual);
     }
 }

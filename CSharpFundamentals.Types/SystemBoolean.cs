@@ -27,12 +27,14 @@ public class SystemBoolean
     public void ConvertToString()
     {
         var value = true;
-        Assert.AreSame("True", value.ToString());
-        Assert.AreSame("True", bool.TrueString);
+        string expected = "True";
+        Assert.AreSame(expected, value.ToString());
+        Assert.AreSame(expected, bool.TrueString);
 
         value = false;
-        Assert.AreSame("False", value.ToString());
-        Assert.AreSame("False", bool.FalseString);
+        expected = "False";
+        Assert.AreSame(expected, value.ToString());
+        Assert.AreSame(expected, bool.FalseString);
     }
 
     [Test]
@@ -47,12 +49,14 @@ public class SystemBoolean
         // Parse strings using the Boolean.Parse method.
         foreach (var value in trueStrings)
         {
-            Assert.AreEqual(true, bool.Parse(value));
+            var expected = true;
+            Assert.AreEqual(expected, bool.Parse(value));
         }
         
         foreach (var value in falseStrings)
         {
-            Assert.AreEqual(false, bool.Parse(value));
+            var expected = false;
+            Assert.AreEqual(expected, bool.Parse(value));
         }
         
         foreach (var value in invalidStrings)
@@ -93,10 +97,12 @@ public class SystemBoolean
         // https://docs.microsoft.com/en-us/dotnet/api/system.convert?view=net-6.0
         
         int value = 1;
-        Assert.AreEqual(true, Convert.ToBoolean(value));
+        bool expected = true;
+        Assert.AreEqual(expected, Convert.ToBoolean(value));
 
         value = 0;
-        Assert.AreEqual(false, Convert.ToBoolean(value));
+        expected = false;
+        Assert.AreEqual(expected, Convert.ToBoolean(value));
     }
     
     [Test]
@@ -106,10 +112,12 @@ public class SystemBoolean
         // https://docs.microsoft.com/en-us/dotnet/api/system.convert?view=net-6.0
         
         string value = "true";
-        Assert.AreEqual(true, Convert.ToBoolean(value));
+        bool expected = true;
+        Assert.AreEqual(expected, Convert.ToBoolean(value));
 
         value = "false";
-        Assert.AreEqual(false, Convert.ToBoolean(value));
+        expected = false;
+        Assert.AreEqual(expected, Convert.ToBoolean(value));
     }
     #endregion
 }

@@ -32,9 +32,14 @@ public class FloatingPointTypes
     public void DefaultValue()
     {
         // The default value of each floating-point type is zero, 0
-        Assert.AreEqual(0, floatDefaultValue);
-        Assert.AreEqual(0, doubleDefaultValue);
-        Assert.AreEqual(0, decimalDefaultValue);
+
+        var expectedDefaultValue = 0;
+        
+        Assert.Multiple(() => {
+            Assert.AreEqual(expectedDefaultValue, floatDefaultValue);
+            Assert.AreEqual(expectedDefaultValue, doubleDefaultValue);
+            Assert.AreEqual(expectedDefaultValue, decimalDefaultValue);
+        });
     }
     
     [Test]
@@ -106,7 +111,9 @@ public class FloatingPointTypes
         });
         
         Assert.AreEqual(floatValue, doubleValue);
-        Assert.AreEqual(12.345000267028809d, doubleValue);
+
+        var expected = 12.345000267028809d;
+        Assert.AreEqual(expected, doubleValue);
     }
     
     [Test]
@@ -126,16 +133,22 @@ public class FloatingPointTypes
         
         Assert.AreEqual(doubleValue, decimalValue);
         Assert.AreEqual(floatValue, decimalValue);
-        Assert.AreEqual(12.345m, decimalValue);
+
+        var expectedConvertedDecimalValue = 12.345m;
+        Assert.AreEqual(expectedConvertedDecimalValue, decimalValue);
         
         // An explicit numeric conversion might result in data loss or throw an exception, typically an OverflowException.
         
         // When you convert a decimal value to an integral type, this value is rounded towards zero to the nearest integral value.
         int integralValue = (int)decimalValue;
-        Assert.AreEqual(12, integralValue);
+
+        var expectedConvertedValue = 12;
+        Assert.AreEqual(expectedConvertedValue, integralValue);
 
         integralValue = (int)1234.5678m;
-        Assert.AreEqual(1234,integralValue);
+
+        expectedConvertedValue = 1234;
+        Assert.AreEqual(expectedConvertedValue,integralValue);
         
         // If the resulting integral value is outside the range of the destination type, an OverflowException is thrown.
         Assert.Throws<OverflowException>(() =>
@@ -145,10 +158,12 @@ public class FloatingPointTypes
         
         // When you convert a double or float value to an integral type, this value is rounded towards zero to the nearest integral value.
         integralValue = (int)987.654321;
-        Assert.AreEqual(987, integralValue);
+        expectedConvertedValue = 987;
+        Assert.AreEqual(expectedConvertedValue, integralValue);
         
         integralValue = (int)-123.4567f;
-        Assert.AreEqual(-123, integralValue);
+        expectedConvertedValue = -123;
+        Assert.AreEqual(expectedConvertedValue, integralValue);
         
         // If the resulting integral value is outside the range of the destination type, the result depends on the overflow checking context.
         // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/checked-and-unchecked
@@ -185,18 +200,22 @@ public class FloatingPointTypes
         
         // When you convert double to float, the double value is rounded to the nearest float value.
         floatValue = (float)Math.PI; // 3.14159265358979323846
-        Assert.AreEqual(3.14159274f, floatValue);
+        var actual = 3.14159274f;
+        Assert.AreEqual(floatValue, actual);
         
         // If the double value is too small or too large to fit into the float type, the result is zero or infinity.
         floatValue = (float)double.Epsilon; // Epsilon represents the smallest positive value greater than zero
-        Assert.AreEqual(0f, floatValue);
+        actual = 0f;
+        Assert.AreEqual(floatValue, actual);
         Assert.AreNotEqual(float.Epsilon,floatValue);
 
         floatValue = (float)doubleMinValue;
-        Assert.AreEqual(float.NegativeInfinity, floatValue);
+        var expected = float.NegativeInfinity;
+        Assert.AreEqual(expected, floatValue);
         
         floatValue = (float)doubleMaxValue;
-        Assert.AreEqual(float.PositiveInfinity, floatValue);
+        expected = float.PositiveInfinity;
+        Assert.AreEqual(expected, floatValue);
     }
 
     [Test]
@@ -239,22 +258,27 @@ public class FloatingPointTypes
         
         var string1 = "123.456";
         float floatValue = float.Parse(string1);
-        Assert.AreEqual(123.456f, floatValue);
+        var actualFloatValue = 123.456f;
+        Assert.AreEqual(floatValue, actualFloatValue);
         
         double doubleValue = double.Parse(string1);
-        Assert.AreEqual(123.456, doubleValue);
+        var actualDoubleValue = 123.456;
+        Assert.AreEqual(doubleValue, actualDoubleValue);
         
         decimal decimalValue = decimal.Parse(string1);
-        Assert.AreEqual(123.456m, decimalValue);
+        var actualDecimalValue = 123.456m;
+        Assert.AreEqual(decimalValue, actualDecimalValue);
         
         // Float & double: Values that are too large to represent are rounded to PositiveInfinity or NegativeInfinity as required by the IEEE 754 specification.
         string1 = "3.402824e38";
         floatValue = float.Parse(string1);
-        Assert.AreEqual(float.PositiveInfinity, floatValue);
+        var expectedFloatValue = float.PositiveInfinity;
+        Assert.AreEqual(expectedFloatValue, floatValue);
         
         string1 = "1.79769313486232e308";
         doubleValue = double.Parse(string1);
-        Assert.AreEqual(double.PositiveInfinity, doubleValue);
+        var expectedDoubleValue = double.PositiveInfinity;
+        Assert.AreEqual(expectedDoubleValue, doubleValue);
         
         // Decimal: an OverflowException will be thrown when trying to parse the string representation of a number less than MinValue or greater than MaxValue.
         string1 = "79,228,162,514,264,337,593,543,950,336";

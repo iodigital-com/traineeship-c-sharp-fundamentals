@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Text;
-
 namespace CSharpFundamentals.Linq;
 
 /// <summary>
@@ -74,8 +71,21 @@ public class SystemLinqEnumerable
         // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.firstordefault
         
         // The following examples try to retrieve the first element from dictionary satisfying the specified condition
-        Assert.AreEqual(new KeyValuePair<string,string[]>(), dictionary.FirstOrDefault(x => x.Value.Length.Equals(4)));
-        Assert.IsNotNull(stringArray.FirstOrDefault(x => x.Equals("water")));
+        var expectedDictionaryElement = new KeyValuePair<string, string[]>();
+        Assert.AreEqual(expectedDictionaryElement, dictionary.FirstOrDefault(x => x.Value.Length.Equals(4)));
+
+        var result = stringArray.FirstOrDefault(x => x.StartsWith("wa"));
+        var expectedString = "water";
+        
+        Assert.AreEqual(expectedString, result);
+        Assert.IsNotNull(result);
+        
+        
+        result = stringArray.FirstOrDefault(x => x.Contains(' '));
+        expectedString = null;
+        
+        Assert.AreEqual(expectedString, result);
+        Assert.IsNull(result);
     }
     
     [Test]
@@ -84,9 +94,13 @@ public class SystemLinqEnumerable
         // The Enumerable.LastOrDefault method returns the last element of a sequence, or a default value if no element is found.
         // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.lastordefault
         
-        // The following examples try to retrieve the last element from dictionary satisfying the specified condition
-        Assert.AreEqual(dictionary["fruit juice"], dictionary.LastOrDefault(x => x.Value.Length.Equals(3)).Value);
-        Assert.AreEqual(intArray[2], intArray.LastOrDefault(x => x.Equals(1)));
+        // The following examples try to retrieve the last element satisfying the specified condition from a sequence
+
+        var expectedDictionaryKey = "fruit juice";
+        Assert.AreEqual(dictionary[expectedDictionaryKey], dictionary.LastOrDefault(x => x.Value.Length.Equals(3)).Value);
+
+        var expectedIndexOf = 2;
+        Assert.AreEqual(intArray[expectedIndexOf], intArray.LastOrDefault(x => x.Equals(1)));
     }
     
     [Test]
@@ -135,9 +149,12 @@ public class SystemLinqEnumerable
             builder.Append(element.Key);
             return builder.ToString();
         }).ToList();
-        
-        Assert.AreEqual("pils, trappist, ale are examples of beer", projected.First());
-        Assert.AreEqual(dictionary.Count, projected.Count);
+
+        var expected = "pils, trappist, ale are examples of beer";
+        Assert.AreEqual(expected, projected.First());
+
+        var expectedCount = dictionary.Count;
+        Assert.AreEqual(expectedCount, projected.Count);
     }
 
     [Test]
@@ -151,10 +168,12 @@ public class SystemLinqEnumerable
         {
             return x.Value.Select(value => $"{value} is {x.Key}");
         }).ToArray();
-        
-        Assert.IsTrue(result.Any(x => x.Equals("ale is beer")));
-        Assert.IsTrue(result.Any(x => x.Equals("milk is dairy")));
-        Assert.IsTrue(result.Any(x => x.Equals("orange juice is fruit juice")));
+
+        var expectedElements = new List<string> { "ale is beer", "milk is dairy", "orange juice is fruit juice" };
+        expectedElements.ForEach((element) =>
+        {
+            Assert.IsTrue(result.Any(x => x.Equals(element)));
+        });
     }
     
     [Test]
@@ -174,8 +193,11 @@ public class SystemLinqEnumerable
             return x.Value.Select(value => $"{value} is a {x.Key} product");
         }).ToArray();
 
-        Assert.AreEqual("milk is a dairy product", result.First());
-        Assert.AreEqual("yoghurt is a dairy product", result.Last());
+        var expected = "milk is a dairy product";
+        Assert.AreEqual(expected, result.First());
+
+        expected = "yoghurt is a dairy product";
+        Assert.AreEqual(expected, result.Last());
     }
     
     #endregion
@@ -198,8 +220,8 @@ public class SystemLinqEnumerable
     {
         // The Enumerable.Average method computes the average of a sequence of numeric values
         // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.average
-        
-        Assert.AreEqual(4.125d, intArray.Average());
+        var expected = 4.125d;
+        Assert.AreEqual(expected, intArray.Average());
     }
     
     [Test]
@@ -207,8 +229,9 @@ public class SystemLinqEnumerable
     {
         // The Enumerable.Sum method computes the sum of a sequence of numeric values
         // https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.sum
-        
-        Assert.AreEqual(33, intArray.Sum());
+
+        var expected = 33;
+        Assert.AreEqual(expected, intArray.Sum());
     }
     #endregion
 }
