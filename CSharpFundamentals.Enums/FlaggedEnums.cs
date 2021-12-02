@@ -37,17 +37,17 @@ public class FlaggedEnums
         
         // Addition & subtraction operator
         const Days sumOfWeekendDays = Days.Saturday + (int)Days.Sunday;
-        var expected = Days.Weekend;
+        var expected = ;
         Assert.AreEqual(expected, sumOfWeekendDays);
         
         // Postfix & prefix increment and decrement operators
         var saturday = Days.Saturday;
         var actual = ++saturday;
 
-        expected = Days.Sunday;
+        expected = ;
         Assert.AreNotEqual(expected, actual);
 
-        expected = Days.Monday | Days.Saturday;
+        expected = Days.Saturday;
         Assert.AreEqual(expected, actual);
     }
 }

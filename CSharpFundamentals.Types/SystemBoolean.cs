@@ -27,12 +27,12 @@ public class SystemBoolean
     public void ConvertToString()
     {
         var value = true;
-        string expected = "True";
+        string expected = "";
         Assert.AreSame(expected, value.ToString());
         Assert.AreSame(expected, bool.TrueString);
 
         value = false;
-        expected = "False";
+        expected = "";
         Assert.AreSame(expected, value.ToString());
         Assert.AreSame(expected, bool.FalseString);
     }
@@ -49,13 +49,13 @@ public class SystemBoolean
         // Parse strings using the Boolean.Parse method.
         foreach (var value in trueStrings)
         {
-            var expected = true;
+            var expected = ;
             Assert.AreEqual(expected, bool.Parse(value));
         }
         
         foreach (var value in falseStrings)
         {
-            var expected = false;
+            var expected = ;
             Assert.AreEqual(expected, bool.Parse(value));
         }
         
@@ -97,11 +97,11 @@ public class SystemBoolean
         // https://docs.microsoft.com/en-us/dotnet/api/system.convert?view=net-6.0
         
         int value = 1;
-        bool expected = true;
+        bool expected = ;
         Assert.AreEqual(expected, Convert.ToBoolean(value));
 
         value = 0;
-        expected = false;
+        expected = ;
         Assert.AreEqual(expected, Convert.ToBoolean(value));
     }
     
@@ -112,11 +112,11 @@ public class SystemBoolean
         // https://docs.microsoft.com/en-us/dotnet/api/system.convert?view=net-6.0
         
         string value = "true";
-        bool expected = true;
+        bool expected;
         Assert.AreEqual(expected, Convert.ToBoolean(value));
 
         value = "false";
-        expected = false;
+        expected = ;
         Assert.AreEqual(expected, Convert.ToBoolean(value));
     }
     #endregion

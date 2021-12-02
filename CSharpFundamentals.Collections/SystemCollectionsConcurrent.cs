@@ -72,7 +72,7 @@ public class SystemCollectionsConcurrent
         
         ConcurrentQueue<double[]> doublesQueue = new();
 
-        var expected = 0;
+        var expected = ;
         Assert.AreEqual(expected, doublesQueue.Count);
         
         // Three main operations can be performed on a Queue<T> and its elements: Enqueue, Dequeue & Peek
@@ -80,7 +80,7 @@ public class SystemCollectionsConcurrent
         // Enqueue adds an element to the end of the Queue<T>
         doublesQueue.Enqueue(new []{ 1.0, 0.2, 1.5E4 });
 
-        expected = 1;
+        expected = ;
         Assert.AreEqual(expected, doublesQueue.Count);
         
         // TryDequeue tries to remove and return the object at the beginning of the ConcurrentQueue<T>.
@@ -111,7 +111,7 @@ public class SystemCollectionsConcurrent
         bool result = stack.TryPeek(out int value);
         Assert.IsFalse(result);
 
-        var expected = 0;
+        var expected = ;
         Assert.AreEqual(expected, value);
         
         // Push inserts an object at the top of the ConcurrentStack<T>.
@@ -120,7 +120,7 @@ public class SystemCollectionsConcurrent
             stack.Push(i);
         });
 
-        expected = 10000;
+        expected = 0;
         Assert.AreEqual(expected, stack.Count);
     }
 }

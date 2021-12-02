@@ -16,7 +16,7 @@ public class SingleDimensionalArrays
         var array = new int[5];
         
         // The elements of the array are initialized to the default value of the element type (in this case 0 for integers).
-        var expectedDefaultValue = 0;
+        var expectedDefaultValue = ;
         Assert.IsTrue(array.All(element => element.Equals(expectedDefaultValue)));
 
         var array2 = new string[4];
@@ -33,7 +33,7 @@ public class SingleDimensionalArrays
         // The array length is inferred by the number of elements in the initialization list.
 
         var array = new string[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-        var expected = 7;
+        var expected = 0;
         Assert.AreEqual(expected, array.Length);
         
         // You can avoid the new expression and the array type when you initialize an array upon declaration
@@ -50,10 +50,10 @@ public class SingleDimensionalArrays
         // You can retrieve the data of an array by using an index.
         string[] days = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 
-        var expectedElementAtIndexZero = "Mon";
+        var expectedElementAtIndexZero = "";
         Assert.AreEqual(expectedElementAtIndexZero, days[0]);
         
-        var expectedElementAtIndexFour = "Fri";
+        var expectedElementAtIndexFour = "";
         Assert.AreEqual(expectedElementAtIndexFour, days[4]);
         // Ranges and indices provide a succinct syntax for accessing single elements or ranges in a sequence.
         // https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/ranges-indexes
@@ -63,28 +63,28 @@ public class SingleDimensionalArrays
         var weekDays = days[..5];
         Assert.AreEqual(5, weekDays.Length);
 
-        expectedElementAtIndexZero = "Mon";
+        expectedElementAtIndexZero = "";
         Assert.AreEqual(expectedElementAtIndexZero, weekDays[0]);
         
-        expectedElementAtIndexFour = "Fri";
+        expectedElementAtIndexFour = "";
         Assert.AreEqual(expectedElementAtIndexFour, weekDays[4]);
 
         var weekendDays = days[5..];
         Assert.AreEqual(2, weekendDays.Length);
 
-        expectedElementAtIndexZero = "Sat";
+        expectedElementAtIndexZero = "";
         Assert.AreEqual(expectedElementAtIndexZero, weekendDays[0]);
         
-        var expectedElementAtIndexOne = "Sun";
+        var expectedElementAtIndexOne = "";
         Assert.AreEqual(expectedElementAtIndexOne, weekendDays[1]);
 
         var tuesdayThroughFriday = days[1..5];
         Assert.AreEqual(4, tuesdayThroughFriday.Length);
         
-        expectedElementAtIndexZero = "Tue";
+        expectedElementAtIndexZero = "";
         Assert.AreEqual(expectedElementAtIndexZero, tuesdayThroughFriday[0]);
         
-        var expectedElementAtIndexThree = "Fri";
+        var expectedElementAtIndexThree = "";
         Assert.AreEqual(expectedElementAtIndexThree, tuesdayThroughFriday[3]);
         
         // The `index from end` operator ^ specifies that an index is relative to the end of a sequence.
@@ -103,7 +103,7 @@ public class SingleDimensionalArrays
         
         var days = new []{ "Mon", "Tue", "Wed", "Thu", "Fri" };
         
-        var outOfRangeIndex = 5;
+        var outOfRangeIndex = ;
         Assert.Throws<IndexOutOfRangeException>(() =>
         {
             days[outOfRangeIndex] = "Sat";

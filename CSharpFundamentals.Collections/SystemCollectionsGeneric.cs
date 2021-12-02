@@ -31,7 +31,7 @@ public class SystemCollectionsGeneric
         intList.Add(5);
 
         // Assert intList contains 1 object
-        var expected = 1;
+        var expected = 0;
         Assert.AreEqual(expected, intList.Count);
 
         // Assert intList contains an object representing the integer value 5 
@@ -41,18 +41,18 @@ public class SystemCollectionsGeneric
         intList.AddRange(new[] { 1, 6, 3, 2 });
 
         // Assert intList contains 5 object
-        expected = 5;
+        expected = 0;
         Assert.AreEqual(expected, intList.Count);
 
         // Assert the last object in intList contains an object representing the integer value 2
-        expected = 2;
+        expected = 0;
         Assert.AreEqual(expected, intList[4]);
 
         // Sort the intList collection
         intList.Sort();
 
         // Assert the last object in intList contains an object representing the integer value 6 
-        expected = 6;
+        expected = 0;
         Assert.AreEqual(expected, intList.Last());
 
         // Initialize a new collection for string object
@@ -70,7 +70,7 @@ public class SystemCollectionsGeneric
         stringList = stringList.OrderBy(x => x).ToList();
 
         // Assert the last object in stringList contains an object representing the string value "zoo"
-        var expectedString = "zoo";
+        var expectedString = "";
         Assert.AreEqual(expectedString, stringList.Last());
 
         // Remove the string object "adrenaline"
@@ -108,7 +108,7 @@ public class SystemCollectionsGeneric
         {
             var result = dictionary.TryAdd("tea", new[] { "hot water", "black tea leaves" });
             // If the key already exists, TryAdd does nothing and returns false.
-            var expected = false;
+            var expected = ;
             Assert.AreEqual(expected, result);
         });
         
@@ -136,7 +136,7 @@ public class SystemCollectionsGeneric
 
         // But a value can be, if its type TValue is a reference type
         Assert.DoesNotThrow(() => { dictionary.Add("black tea", null); });
-        var expected = true;
+        var expected = ;
         Assert.AreEqual(expected, dictionary.ContainsValue(null));
 
         // For purposes of enumeration, each item in the dictionary is treated as a KeyValuePair<TKey,TValue> structure representing a value and its key.
@@ -149,7 +149,7 @@ public class SystemCollectionsGeneric
             }
         }
 
-        expected = false;
+        expected = ;
         Assert.AreEqual(expected, dictionary.ContainsValue(null));
     }
 
@@ -168,14 +168,14 @@ public class SystemCollectionsGeneric
         };
 
         // Assert first element key equals "tea"
-        var expected = "tea";
+        var expected = "";
         Assert.AreEqual(expected, sortedList.First().Key);
         
         sortedList.Add("coffee", new[] { "hot water", "roasted beans" });
         sortedList.Add("chocolate milk", new[] { "hot milk", "cocoa powder", "sugar" });
 
         // Assert first element key equals "chocolate milk"
-        expected = "chocolate milk";
+        expected = "";
         Assert.AreEqual(expected, sortedList.First().Key);
     }
 
@@ -196,10 +196,10 @@ public class SystemCollectionsGeneric
         dictionary.Add("chocolate milk", new() { "hot milk", "cocoa powder", "sugar" });
         dictionary.Add("black tea", new() { "hot water", "black tea leaves" });
         
-        var expected = "black tea";
+        var expected = "";
         Assert.AreEqual(expected, dictionary.First().Key);
 
-        expected = "green tea";
+        expected = "";
         Assert.AreEqual(expected, dictionary.Last().Key);
     }
 
@@ -227,7 +227,7 @@ public class SystemCollectionsGeneric
         // Dequeue removes the oldest element from the start of the Queue<T>
         var lastElement = doublesQueue.Dequeue();
         
-        var expected = 0;
+        var expected = ;
         Assert.AreEqual(expected, doublesQueue.Count);
         
         // Calling Dequeue on an empty Queue<T> will throw an InvalidOperationException
@@ -241,7 +241,7 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
             bool result = doublesQueue.TryDequeue(out double[] element);
-            var expected = false;
+            var expected = ;
             Assert.AreEqual(expected, result);
         });
         
@@ -258,7 +258,7 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
              bool result = doublesQueue.TryPeek(out double[] element);
-             var expected = false;
+             var expected = ;
              Assert.AreEqual(expected, result);
              Assert.IsNull(element);
         });
@@ -285,7 +285,7 @@ public class SystemCollectionsGeneric
             {"camomile tea", new []{"hot water", "camomile flowers", "honey"}}
         });
 
-        expected = 1;
+        expected = 0;
         Assert.AreEqual(expected, listStack.Count);
         
         // Pop removes and returns the object at the top of the Stack<T>.
@@ -304,7 +304,7 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
             bool result = listStack.TryPop(out SortedList<string, string[]> element);
-            var expected = false;
+            var expected = ;
             Assert.AreEqual(expected, result);
             Assert.IsNull(element);
         });
@@ -320,7 +320,7 @@ public class SystemCollectionsGeneric
         Assert.DoesNotThrow(() =>
         {
             bool result = listStack.TryPeek(out SortedList<string, string[]> element);
-            var expected = false;
+            var expected = ;
             Assert.AreEqual(expected, result);
             Assert.IsNull(element);
         });

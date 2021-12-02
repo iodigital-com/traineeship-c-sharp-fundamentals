@@ -18,7 +18,7 @@ public class SystemInt32
     public void DefaultValue()
     {
         // The default value of the Int32 type is 0
-        int expected = 0;
+        int expected;
         Assert.AreEqual(expected, defaultValue);
     }
     
@@ -29,7 +29,7 @@ public class SystemInt32
     [Test]
     public void MinimumValue()
     {
-        int minValue = -2_147_483_648;
+        int minValue = 0;
         Assert.AreEqual(int.MinValue, minValue);
         
         // By default, assigning a value exceeding the supported range will wrap around,
@@ -45,7 +45,7 @@ public class SystemInt32
     [Test]
     public void MaximumValue()
     {
-        int maxValue = 2_147_483_647;
+        int maxValue = 0;
         Assert.AreEqual(int.MaxValue, maxValue);
         
         // By default, assigning a value exceeding the supported range will wrap around,
@@ -106,16 +106,16 @@ public class SystemInt32
         // You can call the Parse or TryParse method to convert
         // the string representation of an Int32 value to an Int32.
         // The string can contain either decimal or hexadecimal digits. 
-        int expected = 101;
+        int expected = 0;
         Assert.AreEqual(expected, int.Parse(string1));
 
-        expected = 1022524;
+        expected = 0;
         Assert.AreEqual(expected, int.Parse(hexadecimal, System.Globalization.NumberStyles.HexNumber));
 
         var result = int.TryParse(string1, out int parsed);
         Assert.IsTrue(result); // The return value indicates whether the conversion succeeded.
 
-        expected = 101;
+        expected = 0;
         Assert.AreEqual(expected, parsed);
         
         result = int.TryParse(hexadecimal, 
@@ -123,7 +123,7 @@ public class SystemInt32
             null, 
             out int parsedHex);
         Assert.IsTrue(result); // The return value indicates whether the conversion succeeded.
-        expected = 1022524;
+        expected = 0;
         Assert.AreEqual(expected, parsedHex);
     }
 
@@ -135,7 +135,7 @@ public class SystemInt32
         
         // You can call a method of the Convert class to a string type to an Int32 value.
         // https://docs.microsoft.com/en-us/dotnet/api/system.convert?view=net-6.0
-        int expected = 101;
+        int expected = 0;
         Assert.AreEqual(expected, Convert.ToInt32(string1));
         
         // However, this does not work for strings containing hexadecimal digits.

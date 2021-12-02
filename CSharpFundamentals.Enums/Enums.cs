@@ -36,10 +36,10 @@ public class Enums
     public void DefaultValue()
     {
         // The default value of an enumeration type E is the value produced by expression (E)0, even if zero doesn't have the corresponding enum member.
-        var expectedStatusDefaultValue = Status.Undefined;
+        var expectedStatusDefaultValue = ;
         Assert.AreEqual(expectedStatusDefaultValue, statusDefaultValue);
 
-        var expectedSeasonDefaultValue = Season.Spring;
+        var expectedSeasonDefaultValue = ;
         Assert.AreEqual(expectedSeasonDefaultValue, seasonDefaultValue);
     }
     
@@ -56,13 +56,13 @@ public class Enums
         var expected = 0;
         Assert.AreEqual(expected, (int)Season.Spring);
         
-        expected = 1;
+        expected = 0;
         Assert.AreEqual(expected, (int)Season.Summer);
         
-        expected = 2;
+        expected = 0;
         Assert.AreEqual(expected, (int)Season.Autumn);
         
-        expected = 3;
+        expected = 0;
         Assert.AreEqual(expected, (int)Season.Winter);
     }
     
@@ -82,18 +82,18 @@ public class Enums
         Assert.IsTrue(enumValue1 > Status.Deleted);
         
         // binary + (Addition operator), binary - (Subtraction operator)
-        var expected = Status.Confirmed;
+        var expected = ;
         Assert.AreEqual(expected,enumValue2 + (int)Status.AwaitingConfirmation); // Notified (1) + AwaitingConfirmation (2) = Confirmed (3)
 
-        expected = Status.Undefined;
+        expected = ;
         Assert.AreEqual(expected,enumValue2 + (int)Status.Deleted); // Notified (1) + Deleted (-1) = Undefined (0)
         
         // ++ and -- (Postfix increment and decrement operators and Prefix increment and decrement operators)
 
-        expected = Status.AwaitingConfirmation;
+        expected = ;
         Assert.AreEqual(expected,++enumValue2); // Notified (1) + 1 = AwaitingConfirmation (2)
 
-        expected = Status.Confirmed;
+        expected = ;
         Assert.AreEqual(expected,--enumValue1); // Archived (4) - 1 = Confirmed (3)
         
         
@@ -101,11 +101,11 @@ public class Enums
         // The set of values that an enum type can take on is not limited by its enum members.
         // In particular, any value of the underlying type of an enum can be cast to the enum type, and is a distinct valid value of that enum type.
         var sumOfEnumValues = Status.Archived + (int)Status.Notified;
-        expected = (Status)5;
+        expected = ;
         Assert.AreEqual(expected, sumOfEnumValues); // Archived (4) + Notified (1) = 5
         
         sumOfEnumValues = Status.Archived + (int)Status.Archived;
-        expected = (Status)8;
+        expected = ;
         Assert.AreEqual(expected, sumOfEnumValues); // Archived (4) + Archived (4) = 8
     }
 }

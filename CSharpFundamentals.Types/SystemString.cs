@@ -31,7 +31,7 @@ public class SystemString
         string string2 = "";
         Assert.AreSame(string1, string2);
 
-        const string actual = "";
+        const string actual = null;
         Assert.AreSame(string.Empty, actual);
     }
 
@@ -53,7 +53,7 @@ public class SystemString
         // The reason is that a Unicode character might be represented by more than one Char. 
         string string1 = "Hello World!";
 
-        int actual = 12;
+        int actual = 0;
         Assert.AreEqual(string1.Length, actual);
         
         // In .NET, a null character can be embedded in a string.
@@ -62,7 +62,7 @@ public class SystemString
         
         Assert.AreNotEqual(string2.Length, actual);
         
-        actual = 13;
+        actual = 0;
         Assert.AreEqual(string2.Length, actual);
     }
 
@@ -81,7 +81,7 @@ public class SystemString
 
         string expected = $"{string1} {string2}!";
 
-        string actual = "Hello World!";
+        string actual = "";
         Assert.AreEqual(expected, actual);
         
         // If the interpolation expression evaluates to null, an empty string ("", or String.Empty) is used.
@@ -91,14 +91,14 @@ public class SystemString
             expected = $"{string1} {defaultValue}!";
         });
 
-        actual = "Hello !";
+        actual = "";
         Assert.AreEqual(expected, actual);
         
         // If the interpolation expression doesn't evaluate to null, typically the ToString method of the result expression is called.
         var date = DateTime.UnixEpoch;
 
         expected = $"{date}";
-        actual = date.ToString();
+        actual = date;
         Assert.AreEqual(expected, actual);
     }
     
@@ -114,7 +114,7 @@ public class SystemString
 
         // "d": Short date pattern. https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#ShortDate
         string expected = $"{date:d}";
-        string actual = "01/01/1970";
+        string actual = null;
         Assert.AreEqual(expected, actual);
         
         actual = date.ToString("d");
@@ -122,7 +122,7 @@ public class SystemString
         
         // "M", "m": Month/day pattern. https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#MonthDay
         expected = $"{date:m}";
-        actual = "January 01";
+        actual = null;
         Assert.AreEqual(expected, actual);
 
         actual = date.ToString("m");
@@ -155,29 +155,29 @@ public class SystemString
         // The result string is affected by the formatting information of the current NumberFormatInfo object.
         CultureInfo.CurrentCulture = new CultureInfo("en-us");
         string expected = $"{number:c}";
-        string actual = "$1,234.00";
+        string actual = "";
         Assert.AreEqual(expected, actual);
 
-        actual = number.ToString("c");
+        actual = number.ToString();
         Assert.AreEqual(expected, actual);
         
         CultureInfo.CurrentCulture = new CultureInfo("nl-be");
         expected = $"{number:c}";
 
-        actual = "€ 1.234,00";
+        actual = "";
         Assert.AreEqual(expected, actual);
 
-        actual = number.ToString("c");
+        actual = number.ToString();
         Assert.AreEqual(expected, actual);
         
         CultureInfo.CurrentCulture = new CultureInfo("en-us");
         decimal value = 123.456m;
         expected = $"{value:C4}";
 
-        actual = "$123.4560";
+        actual = "";
         Assert.AreEqual(expected, actual);
 
-        actual = value.ToString("c4");
+        actual = value.ToString();
         Assert.AreEqual(expected, actual);
     }
 
@@ -191,19 +191,19 @@ public class SystemString
         int value = 0123456;
         string expected = $"{value:D}";
 
-        string actual = "123456"; 
+        string actual = ""; 
         Assert.AreEqual(expected, actual);
 
         actual = $"{value}";
         Assert.AreEqual(expected, actual);
 
-        actual = value.ToString("D");
+        actual = value.ToString();
         Assert.AreEqual(expected, actual);
 
         // If required, the number is padded with zeros to its left to produce the number of digits given by the precision specifier.
         expected = $"{value:D8}";
 
-        actual = "00123456";
+        actual = "";
         Assert.AreEqual(expected, actual);
         
         // This format is supported only for integral types.
@@ -226,19 +226,19 @@ public class SystemString
         const double value = 12345.6789;
         string expected = $"{value:E}";
 
-        string actual = "1.234568E+004";
+        string actual = "";
         Assert.AreEqual(expected, actual);
 
-        actual = value.ToString("E");
+        actual = value.ToString();
         Assert.AreEqual(expected, actual);
         
         // The case of the format specifier indicates whether to prefix the exponent with an "E" or an "e".
         expected = $"{value:e}";
 
-        actual = "1.234568e+004";
+        actual = "";
         Assert.AreEqual(expected, actual);
 
-        actual = value.ToString("e");
+        actual = value.ToString();
         Assert.AreEqual(expected, actual);
     }
 
@@ -252,17 +252,17 @@ public class SystemString
         float value = .2568f;
         var string1 = $"{value:P}";
 
-        string actual = "25.68 %";
+        string actual = "";
         Assert.AreEqual(string1, actual);
 
-        actual = value.ToString("P");
+        actual = value.ToString();
         Assert.AreEqual(string1, actual);
 
         string1 = $"{value:P0}";
-        actual = "26 %";
+        actual = "";
         Assert.AreEqual(string1, actual);
 
-        actual = value.ToString("P0");
+        actual = value.ToString();
         Assert.AreEqual(string1, actual);
     }
     #endregion
@@ -289,7 +289,7 @@ public class SystemString
         // Notice we increment the index of the space character by 1 to point to the start of the actual substring we are interested in
         var lastName = string1.Substring(string1.IndexOf(' ') + 1 );
 
-        string actual = "Lastname";
+        string actual = "";
         Assert.AreEqual(lastName, actual);
     }
     
@@ -302,10 +302,10 @@ public class SystemString
 
         string[] substrings = string1.Split(' ');
 
-        string actual = "Firstname";
+        string actual = "";
         Assert.AreEqual(substrings[0], actual);
 
-        actual = "Lastname";
+        actual = "";
         Assert.AreEqual( substrings[1], actual);
     }
     
@@ -324,10 +324,10 @@ public class SystemString
         // Notice we increment the index of the space character by 1 to point to the start of the actual substring we are interested in
         var lastName = string1[(string1.IndexOf(' ') + 1)..];
 
-        string actual = "Firstname";
+        string actual = "";
         Assert.AreEqual(firstName, actual);
 
-        actual = "Lastname";
+        actual = "";
         Assert.AreEqual( lastName, actual);
     }
     #endregion
